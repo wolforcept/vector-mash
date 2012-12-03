@@ -1,10 +1,12 @@
-package mains;
+package main;
+
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import server.Ivory;
-
 public class Main {
+
+	private static final Dimension SIZE = new Dimension(768,640);
 
 	public static void main(String[] args) {
 		new Main().start();
@@ -15,7 +17,7 @@ public class Main {
 	public Main() {
 
 		frame = new JFrame("VectorMash");
-		frame.setSize(Ivory.SIZE);
+		frame.setSize(SIZE);
 		frame.setLocationRelativeTo(null);
 
 	}
