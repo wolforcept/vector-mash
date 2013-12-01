@@ -1,26 +1,41 @@
 package server;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class VectorServer {
 
-	private static final int PORT = 60550, FREQUENCY = 60;
+	private static final int PORT = 60550;// , FREQUENCY = 60;
+
+	ReentrantLock notice;
+	Ivory ivory;
 
 	public VectorServer() {
 
 		new VectorServerCommunicator(PORT).start();
+
+		ivory = new Ivory();
+		notice = ivory.commence();
 
 		new Thread() {
 			public void run() {
 				try {
 
 					while (true) {
-						sleep(1000 / FREQUENCY);
+
+						notice.wait();
+						System.out.println("noticed!");
+
 					}
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}.start();
+
+		ivory.add(2, 2, new Hole());
+
+		ivory.add(2, 2, new Hole());
+
 	}
 
 	public static void main(String[] args) {
