@@ -44,12 +44,12 @@ public class VectorServerCommunicator extends Thread {
 
 		String name;
 		try {
-			Object first = is.readObject();
-			if (!(first instanceof String)) {
+			Object firstMessage = is.readObject();
+			if (!(firstMessage instanceof String)) {
 				throw new ClassNotFoundException();
 			}
-			name = (String) first;
-			new DealWithClient(name, is, os).start();
+			name = (String) firstMessage;
+			new Client(name, is, os).start();
 			System.out.println("Accepted new Client: " + name);
 		} catch (ClassNotFoundException e) {
 			System.err.println("Could not accept new Client. Wrong Version?");
@@ -66,24 +66,4 @@ public class VectorServerCommunicator extends Thread {
 		server_socket = new ServerSocket(port);
 	}
 
-	private class DealWithClient extends Thread {
-
-		private ObjectInputStream is;
-		private ObjectOutputStream os;
-		private String name;
-
-		public DealWithClient(String name, ObjectInputStream is,
-				ObjectOutputStream os) {
-			this.name = name;
-			this.is = is;
-			this.os = os;
-
-		}
-
-		@Override
-		public void run() {
-
-		}
-
-	}
 }
